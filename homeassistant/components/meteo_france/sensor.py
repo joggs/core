@@ -1,7 +1,7 @@
 """Support for Meteo-France raining forecast sensor."""
 import logging
 
-from meteofrance.helpers import (
+from meteofrance_api.helpers import (
     get_warning_text_status_from_indice_color,
     readeable_phenomenoms_dict,
 )
@@ -79,9 +79,10 @@ class MeteoFranceSensor(CoordinatorEntity):
         """Initialize the Meteo-France sensor."""
         super().__init__(coordinator)
         self._type = sensor_type
-        city_name = self.coordinator.data.position["name"]
-        self._name = f"{city_name} {SENSOR_TYPES[self._type][ENTITY_NAME]}"
-        self._unique_id = f"{self.coordinator.data.position['lat']},{self.coordinator.data.position['lon']}_{self._type}"
+        if hasattr(self.coordinator.data, "position"):
+            city_name = self.coordinator.data.position["name"]
+            self._name = f"{city_name} {SENSOR_TYPES[self._type][ENTITY_NAME]}"
+            self._unique_id = f"{self.coordinator.data.position['lat']},{self.coordinator.data.position['lon']}_{self._type}"
 
     @property
     def unique_id(self):
@@ -114,7 +115,7 @@ class MeteoFranceSensor(CoordinatorEntity):
             else:
                 value = data[path[1]]
 
-        if self._type == "wind_speed":
+        if self._type in ["wind_speed", "wind_gust"]:
             # convert API wind speed from m/s to km/h
             value = round(value * 3.6)
         return value

@@ -4,6 +4,7 @@ DOMAIN = "homekit_controller"
 KNOWN_DEVICES = f"{DOMAIN}-devices"
 CONTROLLER = f"{DOMAIN}-controller"
 ENTITY_MAP = f"{DOMAIN}-entity-map"
+TRIGGERS = f"{DOMAIN}-triggers"
 
 HOMEKIT_DIR = ".homekit"
 PAIRING_FILE = "pairing.json"
@@ -24,6 +25,7 @@ HOMEKIT_ACCESSORY_DISPATCH = {
     "motion": "binary_sensor",
     "carbon-dioxide": "sensor",
     "humidity": "sensor",
+    "humidifier-dehumidifier": "humidifier",
     "light": "sensor",
     "temperature": "sensor",
     "battery": "sensor",
@@ -36,4 +38,5 @@ HOMEKIT_ACCESSORY_DISPATCH = {
     "occupancy": "binary_sensor",
     "television": "media_player",
     "valve": "switch",
+    "camera-rtp-stream-management": "camera",
 }
